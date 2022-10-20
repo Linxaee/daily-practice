@@ -88,6 +88,12 @@ class GGPromise {
 	then(onFulfilled, onRejected) {
 		return new GGPromise((resolve, reject) => {
 			if (this.status === PROMISE_STATE_FULFILLED && onFulfilled) {
+				// try {
+				// 	let value = onFulfilled(this.value);
+				// 	resolve(value);
+				// } catch (err) {
+				// 	reject(err);
+				// }
 				executeFnWithCatchErr(onFulfilled, this.value, resolve, reject);
 			}
 			if (this.status === PROMISE_STATE_REJECTED && onRejected) {
@@ -110,6 +116,9 @@ class GGPromise {
 						reject
 					);
 				});
+				// 链式调用上一次promise的结果要是下一次的开始
+				// this.onFulfilledCallbacks.push((onFulfilled));
+				// this.onRejectedCallbacks.push(onRejected);
 			}
 		});
 	}
@@ -139,3 +148,11 @@ promise
 			console.log("err2:", err);
 		}
 	);
+promise.then(
+	(res) => {
+		console.log("res3:", res);
+	},
+	(err) => {
+		console.log("err3:", err);
+	}
+);

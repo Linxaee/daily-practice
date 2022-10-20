@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<input type="text" />
+		<button>取消</button>
+		<script src="./_throttle.js"></script>
+		<script>
+			const inputTl = document.querySelector("input");
+			const buttonTl = document.querySelector("button");
+
+			let count = 0;
+			const inputChange = function (event) {
+				console.log(`发送了${++count}网络请求`, this, event);
+			};
+
+			inputTl.oninput = throttle(inputChange, 1000);
+		</script>
+	</body>
+</html>
