@@ -1,3 +1,7 @@
+/**
+ * vue响应式基本原理,vue3 Proxy
+ * 2022/10/23
+ */
 // 全局变量临时存储需要调用的函数
 let reactiveFn = null;
 let targetMap = new WeakMap();

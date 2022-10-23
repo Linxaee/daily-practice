@@ -86,6 +86,16 @@ class GGPromise {
 		}
 	}
 	then(onFulfilled, onRejected) {
+		onRejected =
+			onRejected ||
+			function (err) {
+				throw err;
+			};
+		onFulfilled =
+			onFulfilled ||
+			function (res) {
+				return res;
+			};
 		return new GGPromise((resolve, reject) => {
 			if (this.status === PROMISE_STATE_FULFILLED && onFulfilled) {
 				// try {
@@ -122,37 +132,126 @@ class GGPromise {
 			}
 		});
 	}
+	catch(onRejected) {
+		return this.then(undefined, onRejected);
+	}
+	finally(onFinally) {
+		this.then(onFinally, onFinally);
+	}
+	static resolve(value) {
+		return new GGPromise((resolve, reject) => {
+			resolve(value);
+		});
+	}
+	static reject(reason) {
+		return new GGPromise((resolve, reject) => {
+			reject(reason);
+		});
+	}
+	static all(promises) {
+		return new Promise((resolve, reject) => {
+			let results = [];
+			promises.forEach((promise) => {
+				promise
+					.then((res) => {
+						results.push(res);
+					})
+					.catch((err) => {
+						reject(err);
+					})
+					.finally(() => {
+						if (promises.length === results.length) {
+							resolve(results);
+						}
+					});
+			});
+		});
+	}
+	static race(promises) {
+		return new Promise((resolve, reject) => {
+			promises.forEach((promise) => {
+				promise
+					.then((res) => {
+						resolve(res);
+					})
+					.catch((err) => {
+						reject(err);
+					});
+			});
+		});
+	}
+	static allSettled(promises) {
+		return new Promise((resolve, reject) => {
+			let results = [];
+			promises.forEach((promise) => {
+				// 不改变原顺序
+				let index = promises.indexOf(promise);
+				promise
+					.then((res) => {
+						results[index] = {
+							status: PROMISE_STATE_FULFILLED,
+							value: res,
+						};
+					})
+					.catch((err) => {
+						results[index] = {
+							status: PROMISE_STATE_REJECTED,
+							reason: err,
+						};
+					})
+					.finally(() => {
+						if (promises.length === results.length) {
+							resolve(results);
+						}
+					});
+			});
+		});
+	}
 }
 
-const promise = new GGPromise((resolve, reject) => {
-	resolve(666);
+// const promise = new GGPromise((resolve, reject) => {
+// 	// resolve(666);
+// 	reject(456);
+// });
+// promise
+// 	.then((res) => {
+// 		console.log("res:", res);
+// 	})
+// 	.catch((err) => {
+// 		console.log("err:", err);
+// 	})
+// 	.finally(() => {
+// 		console.log("finally");
+// 	});
+// GGPromise.resolve(123).then((res) => {
+// 	console.log("res", res);
+// });
+let p1 = new GGPromise((resolve, reject) => {
+	setTimeout(() => {
+		resolve("p1");
+	}, 2000);
 });
-promise
-	.then(
-		(res) => {
-			console.log("res:", res);
-			return new GGPromise((resolve, reject) => {
-				resolve("return的promise");
-			});
-		},
-		(err) => {
-			console.log("err:", err);
-			return 555;
-		}
-	)
-	.then(
-		(res) => {
-			console.log("res2:", res);
-		},
-		(err) => {
-			console.log("err2:", err);
-		}
-	);
-promise.then(
-	(res) => {
-		console.log("res3:", res);
-	},
-	(err) => {
-		console.log("err3:", err);
-	}
-);
+let p2 = new GGPromise((resolve, reject) => {
+	setTimeout(() => {
+		reject("p2");
+	}, 1000);
+});
+let p3 = new GGPromise((resolve, reject) => {
+	setTimeout(() => {
+		resolve("p3");
+	}, 3000);
+});
+GGPromise.allSettled([p1, p2, p3])
+	.then((res) => {
+		console.log("resgg", res);
+	})
+	.catch((err) => {
+		console.log("errgg", err);
+	});
+Promise.allSettled([p1, p2, p3])
+	.then((res) => {
+		console.log("res", res);
+	})
+	.catch((err) => {
+		console.log("err", err);
+	});
