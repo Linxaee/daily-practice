@@ -1,6 +1,12 @@
 /**
  * name:instance of实现
  */
+/**
+ * 
+ * @param {*} src 源对象
+ * @param {*} target 待查找对象
+ * @returns  是否存在
+ */
 function myInstance(src, target) {
 	while (target.__proto__) {
 		if (src.__proto__ === target.prototype) return true;
