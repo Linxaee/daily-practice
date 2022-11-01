@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script src="../../vue.js"></script>
+		<div id="app"></div>
+
+		<template id="my-app">
+			<h2>{{obj.message}}</h2>
+			<span style="font-size: 24px"
+				>旧值:{{oldValue}}&nbsp;&nbsp;新值:{{newValue}}</span
+			>
+			<br />
+			<button @click="changeMsg">修改msg</button>
+		</template>
+
+		<script>
+			const App = {
+				template: "#my-app",
+				data() {
+					return {
+						obj: { message: "Hello World" },
+						newValue: "",
+						oldValue: "",
+					};
+				},
+				methods: {
+					changeMsg() {
+						this.obj.message = "Goodbye World";
+					},
+				},
+				watch: {
+					Data: {
+						handler(newObj, oldObj) {
+							this.oldValue = oldObj.message;
+							this.newValue = newObj.message;
+							console.log("newObj", newObj);
+							console.log("oldObj", oldObj);
+							console.log("newObj===oldObj", newObj === oldObj);
+						},
+						deep: true,
+					},
+				},
+				computed: {
+					Data() {
+						return JSON.parse(JSON.stringify(this.obj));
+					},
+				},
+				mounted() {
+					this.oldValue = this.obj.message;
+				},
+			};
+			Vue.createApp(App).mount("#app");
+		</script>
+	</body>
+</html>

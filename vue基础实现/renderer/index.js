@@ -4,12 +4,23 @@
  */
 const vnode = {
 	tag: "div",
-	props: {
-		onClick: () => {
-			alert(123);
+	props: {},
+	children: [
+		{
+			tag: "div",
+			props: {
+				onClick: () => {
+					alert(123);
+				},
+			},
+			children: "点我",
 		},
-	},
-	children: "click me",
+		{
+			tag: "h1",
+			props: {},
+			children: "日",
+		},
+	],
 };
 /**
  * 将vnode作为container的子节点渲染
@@ -41,5 +52,7 @@ function renderer(vnode, container) {
 	}
 	// 元素挂载到当前节点下
 	container.appendChild(el);
+	return el;
 }
+
 renderer(vnode, document.body);
