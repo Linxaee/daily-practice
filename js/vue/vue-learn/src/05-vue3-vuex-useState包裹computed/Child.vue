@@ -5,7 +5,6 @@
 </template>
 
 <script setup>
-import { count } from './abc';
 
 
 </script>

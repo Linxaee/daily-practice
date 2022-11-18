@@ -4,7 +4,6 @@
         <h2>当前计数：{{ counter }}</h2>
         <button @click="increment">+1</button>
         <button @click="decrement">-1</button>
-        <h1 @click="count++">{{ count }}</h1>
         <Child></Child>
     </div>
 </template>
@@ -12,7 +11,6 @@
 <script setup>
 import { useStore, mapState } from 'vuex'
 import { computed, toRefs } from 'vue'
-import { count } from './abc'
 import Child from './Child.vue'
 const store = useStore()
 const increment = () => {

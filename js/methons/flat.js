@@ -11,9 +11,8 @@
  * 展开写法
  */
 Array.prototype.myFlat = function (deepNum = 1) {
-	curArr = this;
-	if (deepNum <= 0) return curArr;
-	return curArr.reduce((total, value) => {
+	if (deepNum <= 0) return this;
+	return this.reduce((total, value) => {
 		if (Array.isArray(value)) {
 			return total.concat(value.myFlat(deepNum - 1));
 		} else {
@@ -21,5 +20,5 @@ Array.prototype.myFlat = function (deepNum = 1) {
 		}
 	}, []);
 };
-arr = [1, [[2, [3, 4]], 5, 6], 7, [[8, 9], 10, 11]];
+let arr = [1, [[2, [3, 4]], 5, 6], 7, [[8, 9], 10, 11]];
 console.log("arr", arr.myFlat());
