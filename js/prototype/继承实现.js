@@ -39,7 +39,7 @@ Person.prototype.running = function () {
 
 function createObject(o) {
 	function fn() {}
-	fn.prototype = o;
+	fn.prototype = o.prototype;
 	return new fn();
 }
 
@@ -47,7 +47,7 @@ function Student(name, age, id) {
 	Person.call(this, name, age);
 	this.id = id;
 }
-Student.prototype = createObject(Person.prototype);
+Student.prototype = createObject(Person);
 const s = new Student("gg", 21, 1234);
 s.eating();
 s.running();
