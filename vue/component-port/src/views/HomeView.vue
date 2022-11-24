@@ -1,18 +1,13 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
-  </div>
+	<nav>
+		<router-link to="/foo">to foo</router-link>
+	</nav>
+	<div>home</div>
+	<comProxy class="comProxy" style="border-radius: 50%; margin-left: 200px; overflow: hidden"></comProxy>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
-
-export default defineComponent({
-  name: 'HomeView',
-  components: {
-    HelloWorld,
-  },
-});
+<script lang="ts" setup>
+import comProxy from "../components/comProxy.vue";
 </script>
+
+<style lang="scss" scoped></style>
