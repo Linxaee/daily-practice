@@ -1,0 +1,15 @@
+{
+	"name": "promise",
+	"version": "1.0.0",
+	"description": "",
+	"main": "promise-then.js",
+	"scripts": {
+		"test": "promises-aplus-tests GGPromise"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"promises-aplus-tests": "^2.1.2"
+	}
+}

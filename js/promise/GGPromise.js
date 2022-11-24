@@ -16,11 +16,11 @@ function executeFnWithCatchErr(Fn, param, resolve, reject) {
 }
 // 处理回调函数的返回值，若是promise对象则返回then后的结果，普通值则直接返回
 function resolvePromise(resolve, reject, target) {
+	if (target === this) {
+		return reject(new TypeError("The promise and the return value are the same"));
+	}
 	// 判断是否是对象或者函数
-	if (
-		(typeof target == "function" && target !== null) ||
-		typeof target === "object"
-	) {
+	if ((typeof target == "function" && target !== null) || typeof target === "object") {
 		let called = false;
 		try {
 			const then = target.then;
@@ -87,15 +87,12 @@ class GGPromise {
 	}
 	then(onFulfilled, onRejected) {
 		onRejected =
-			onRejected ||
-			function (err) {
-				throw err;
-			};
-		onFulfilled =
-			onFulfilled ||
-			function (res) {
-				return res;
-			};
+			typeof onRejected === "function"
+				? onRejected
+				: (err) => {
+						throw err;
+				  };
+		onFulfilled = typeof onFulfilled === "function" ? onFulfilled : (res) => res;
 		return new GGPromise((resolve, reject) => {
 			if (this.status === PROMISE_STATE_FULFILLED && onFulfilled) {
 				// try {
@@ -111,20 +108,10 @@ class GGPromise {
 			}
 			if (this.status === PROMISE_STATE_PENDING) {
 				this.onFulfilledCallbacks.push(() => {
-					executeFnWithCatchErr(
-						onFulfilled,
-						this.value,
-						resolve,
-						reject
-					);
+					executeFnWithCatchErr(onFulfilled, this.value, resolve, reject);
 				});
 				this.onRejectedCallbacks.push(() => {
-					executeFnWithCatchErr(
-						onRejected,
-						this.reason,
-						resolve,
-						reject
-					);
+					executeFnWithCatchErr(onRejected, this.reason, resolve, reject);
 				});
 				// 链式调用上一次promise的结果要是下一次的开始
 				// this.onFulfilledCallbacks.push((onFulfilled));
@@ -208,6 +195,15 @@ class GGPromise {
 		});
 	}
 }
+GGPromise.deferred = function () {
+	let result = {};
+	result.promise = new GGPromise((resolve, reject) => {
+		result.resolve = resolve;
+		result.reject = reject;
+	});
+
+	return result;
+};
 
 // const promise = new GGPromise((resolve, reject) => {
 // 	// resolve(666);
@@ -255,3 +251,4 @@ Promise.allSettled([p1, p2, p3])
 	.catch((err) => {
 		console.log("err", err);
 	});
+module.exports = GGPromise;
