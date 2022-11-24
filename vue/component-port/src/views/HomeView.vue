@@ -3,7 +3,8 @@
 		<router-link to="/foo">to foo</router-link>
 	</nav>
 	<div>home</div>
-	<comProxy class="comProxy" style="border-radius: 50%; margin-left: 200px; overflow: hidden"></comProxy>
+	<!-- 占位占位并传入样式 -->
+	<comProxy myStyle="width:150px;height:150px;border-radius: 50%; margin-left: 600px; overflow: hidden"></comProxy>
 </template>
 
 <script lang="ts" setup>

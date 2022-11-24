@@ -10,10 +10,14 @@ import { ref } from "vue";
 let isShow = ref(true);
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .img-con {
 	position: fixed;
 	display: flex;
 	transition: all 0.2s linear;
+	img {
+		width: 100%;
+		height: 100%;
+	}
 }
 </style>

@@ -1,6 +1,7 @@
 <template>
 	<router-view />
 	<comContainer v-slot="{ style }">
+		<!-- 接受作用域插槽传入的metaData，结构出style赋值给被包裹的组件 -->
 		<myCom :style="style"></myCom>
 	</comContainer>
 </template>
@@ -19,7 +20,7 @@ body {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	text-align: center;
-	color: #2c3e50;
+	color: white;
 }
 
 nav {
