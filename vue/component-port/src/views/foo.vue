@@ -5,7 +5,10 @@
 	</nav>
 	<div>foo</div>
 	<!-- 占位并传入样式 -->
-	<comProxy myStyle="border-radius:10px;width:80px;height:80px;margin-left: 10px; overflow: hidden"></comProxy>
+	<comProxy
+		style="width: 100px; height: 100px; background-color: red"
+		myStyle="border-radius:10px;width:80px;height:80px;margin-left: 10px; overflow: hidden"
+	></comProxy>
 </template>
 
 <script lang="ts" setup>
