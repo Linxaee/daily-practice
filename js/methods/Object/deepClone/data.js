@@ -12,5 +12,6 @@ export const obj1 = {
 
 export const obj2 = {
 	name: "gg",
+	friends: ["1", "2", "3"],
 	age: 21,
 };
