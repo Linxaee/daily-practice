@@ -1,6 +1,6 @@
 import axios from "axios";
 import qs from "qs";
-import { BASE_URL, TIME_OUT, MULTIPART, APP_JSON, APP_CODED } from "../config/request.config";
+import { BASE_URL, TIME_OUT, MULTIPART, APP_JSON, APP_CODED } from "./config/request.config";
 class myRequest {
 	instance;
 	interceptors;
@@ -8,9 +8,10 @@ class myRequest {
 		this.instance = axios.create(config);
 		this.interceptors = config.interceptors;
 
-		this.instance.interceptors.request.use(this.interceptors.reqInterceptor);
-		this.instance.interceptors.response.use(this.interceptors.resInterceptor);
-
+		if (this.interceptors) {
+			this.instance.interceptors.request.use(this.interceptors.reqInterceptor);
+			this.instance.interceptors.response.use(this.interceptors.resInterceptor);
+		}
 		this.instance.interceptors.response.use(
 			res => {
 				return res.data;
