@@ -4,10 +4,11 @@ import { BASE_URL, TIME_OUT, MULTIPART, APP_JSON, APP_CODED } from "./config/req
 class myRequest {
 	instance;
 	interceptors;
+	headers;
 	constructor(config) {
 		this.instance = axios.create(config);
 		this.interceptors = config.interceptors;
-
+		this.headers = config.headers;
 		if (this.interceptors) {
 			this.instance.interceptors.request.use(this.interceptors.reqInterceptor);
 			this.instance.interceptors.response.use(this.interceptors.resInterceptor);
@@ -22,6 +23,8 @@ class myRequest {
 		);
 	}
 	request(config) {
+		const headers = this.headers;
+		// console.log({ ...config, headers });
 		return new Promise((resolve, reject) => {
 			this.instance.request(config).then(
 				res => {
@@ -37,6 +40,7 @@ class myRequest {
 		return this.request({ ...config, method: "GET", url });
 	}
 	post(url, config) {
+		console.log(config);
 		return this.request({ ...config, method: "POST", url });
 	}
 }
@@ -44,17 +48,17 @@ class myRequest {
 export const LinRequestMultipart = new myRequest({
 	baseURL: BASE_URL,
 	timeout: TIME_OUT,
-	headers: {
-		"Content-Type": MULTIPART,
-	},
+	// headers: {
+	//     'Content-Type': 'application/x-www-form-urlencoded'
+	// },
 });
 
 export const LinRequestAppCoded = new myRequest({
 	baseURL: BASE_URL,
 	timeout: TIME_OUT,
-	headers: {
-		"Content-Type": APP_CODED,
-	},
+	// headers: {
+	// 	"Content-Type": APP_CODED,
+	// },
 	interceptors: {
 		reqInterceptor: config => {
 			config.data = qs.stringify(config.data);
@@ -66,7 +70,7 @@ export const LinRequestAppCoded = new myRequest({
 export const LinRequestAppJson = new myRequest({
 	baseURL: BASE_URL,
 	timeout: TIME_OUT,
-	headers: {
-		"Content-Type": APP_JSON,
-	},
+	// headers: {
+	// 	"Content-Type": APP_JSON,
+	// },
 });

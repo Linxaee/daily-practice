@@ -14,14 +14,14 @@
 					/>
 					<div class="upload_button_box">
 						<button class="upload_button select" @click="handleClick1">选择文件</button>
-						<button class="upload_button upload">上传到服务器</button>
+						<button class="upload_button upload" @click="upload1">上传到服务器</button>
 					</div>
 					<div class="upload_tip">只能上传 PNG/JPG/JPEG 格式图片，且大小不能超过2MB</div>
 					<ul class="upload_list">
-						<!-- <li>
-                        <span>文件：...</span>
-                        <span><em>移除</em></span>
-                    </li> -->
+						<li>
+							<span>文件：{{ fileTitle }}</span>
+							<span @click="removeFile1"><em>移除</em></span>
+						</li>
 					</ul>
 				</section>
 			</div>
@@ -118,7 +118,7 @@
 <script setup>
 import { LinRequestMultipart, LinRequestAppCoded, LinRequestAppJson } from "../src/request";
 import { useUpload1 } from "./hooks/upload1";
-const { handleClick1, handleChange1, inputRef1 } = useUpload1();
+const { handleClick1, handleChange1, removeFile1, upload1, inputRef1, fileTitle } = useUpload1();
 // 监听用户选择文件
 </script>
 
@@ -214,7 +214,6 @@ body {
 	font-size: 12px;
 }
 
-.upload_box .upload_list,
 .upload_box .upload_abbre,
 .upload_box .upload_progress,
 .upload_box .upload_mark {
