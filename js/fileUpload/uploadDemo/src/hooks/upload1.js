@@ -2,7 +2,7 @@ import { ref } from "vue";
 import { LinRequestMultipart } from "../request/index";
 export function useUpload1() {
 	const inputRef1 = ref(null);
-	const fileTitle = ref("");
+	const fileTitle1 = ref("");
 	let uploadFile = null;
 	/**
 	 * @desc 监听用户选择文件
@@ -27,7 +27,7 @@ export function useUpload1() {
 			console.log("上传文件应小于2M");
 			return;
 		}
-		fileTitle.value = file.name;
+		fileTitle1.value = file.name;
 		uploadFile = file;
 		// console.log(inputRef1.value.files[0]);
 	}
@@ -49,7 +49,7 @@ export function useUpload1() {
 		// 构造formData
 		let formData = new FormData();
 		formData.append("file", uploadFile);
-		formData.append("filename", fileTitle.value);
+		formData.append("filename", fileTitle1.value);
 		/**
 		 * @desc 发送请求
 		 * @tip config中需要添加data属性再放入formData
@@ -74,9 +74,9 @@ export function useUpload1() {
 
 	function initFile() {
 		uploadFile = "";
-		fileTitle.value = "";
+		fileTitle1.value = "";
 		// 清空input文件数组的方法
 		inputRef1.value.innerHTML = "";
 	}
-	return { handleClick1, handleChange1, removeFile1, upload1, inputRef1, fileTitle };
+	return { handleClick1, handleChange1, removeFile1, upload1, inputRef1, fileTitle1 };
 }

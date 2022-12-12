@@ -19,7 +19,7 @@
 					<div class="upload_tip">只能上传 PNG/JPG/JPEG 格式图片，且大小不能超过2MB</div>
 					<ul class="upload_list">
 						<li>
-							<span>文件：{{ fileTitle }}</span>
+							<span>文件：{{ fileTitle1 }}</span>
 							<span @click="removeFile1"><em>移除</em></span>
 						</li>
 					</ul>
@@ -68,12 +68,13 @@
 			<div class="item">
 				<h3>单一文件上传「进度管控」</h3>
 				<section class="upload_box" id="upload4">
-					<input type="file" class="upload_inp" />
+					<input type="file" class="upload_inp" @change="handleChange4" ref="inputRef4" />
 					<div class="upload_button_box">
-						<button class="upload_button select">上传文件</button>
+						<button class="upload_button select" @click="handleClick4">上传文件</button>
 					</div>
 					<div class="upload_progress">
-						<div class="value" :style="progress4"></div>
+						<div class="value" :style="`width:${progress4}%`"></div>
+						<span>{{ Math.floor(progress4) }}%</span>
 					</div>
 				</section>
 			</div>
@@ -81,16 +82,22 @@
 			<div class="item">
 				<h3>多文件上传</h3>
 				<section class="upload_box" id="upload5">
-					<input type="file" class="upload_inp" multiple />
+					<input type="file" class="upload_inp" multiple @change="handleChange5" ref="inputRef5" />
 					<div class="upload_button_box">
-						<button class="upload_button select">选择文件</button>
-						<button class="upload_button upload">上传到服务器</button>
+						<button class="upload_button select" @click="handleClick5">选择文件</button>
+						<button class="upload_button upload" @click="upload5">上传到服务器</button>
 					</div>
 					<ul class="upload_list">
-						<!-- <li key='xx'>
-                        <span>文件：xxxxx</span>
-                        <span><em>移除</em></span>
-                    </li> -->
+						<template v-for="(file, index) in uploadFiles">
+							<li>
+								<span>文件:{{ file.fileName }}</span>
+								<span @click="removeFile5(index)">移除</span>
+								<div class="upload_progress">
+									<div class="value" :style="`width:${file.progress}%`"></div>
+									<span>{{ Math.floor(file.progress) }}%</span>
+								</div>
+							</li>
+						</template>
 					</ul>
 				</section>
 			</div>
@@ -132,11 +139,13 @@ import { LinRequestMultipart, LinRequestAppCoded, LinRequestAppJson } from "../s
 import { useUpload1 } from "./hooks/upload1";
 import { useUpload2 } from "./hooks/upload2";
 import { useUpload3 } from "./hooks/upload3";
+import { useUpload4 } from "./hooks/upload4";
+import { useUpload5 } from "./hooks/upload5";
 const { handleClick1, handleChange1, removeFile1, upload1, inputRef1, fileTitle1 } = useUpload1();
 const { handleClick2, handleChange2, removeFile2, upload2, inputRef2, fileTitle2 } = useUpload2();
 const { handleClick3, handleChange3, removeFile3, upload3, inputRef3, fileTitle3, imgSrc3 } = useUpload3();
-
-// 监听用户选择文件
+const { handleClick4, handleChange4, removeFile4, upload4, inputRef4, fileTitle4, progress4 } = useUpload4();
+const { handleClick5, handleChange5, removeFile5, upload5, inputRef5, uploadFiles } = useUpload5();
 </script>
 
 <style scoped>

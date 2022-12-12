@@ -99,5 +99,5 @@ export function useUpload3() {
 		// 清空input文件数组的方法
 		inputRef3.value.innerHTML = "";
 	}
-	return { handleClick3, handleChange3, upload3, inputRef3, fileTitle3,imgSrc3 };
+	return { handleClick3, handleChange3, upload3, inputRef3, fileTitle3 };
 }
