@@ -23,7 +23,7 @@ class myRequest {
 		);
 	}
 	request(config) {
-		const headers = this.headers;
+		// const headers = this.headers;
 		// console.log({ ...config, headers });
 		return new Promise((resolve, reject) => {
 			this.instance.request(config).then(
@@ -40,7 +40,6 @@ class myRequest {
 		return this.request({ ...config, method: "GET", url });
 	}
 	post(url, config) {
-		console.log(config);
 		return this.request({ ...config, method: "POST", url });
 	}
 }
@@ -61,6 +60,7 @@ export const LinRequestAppCoded = new myRequest({
 	// },
 	interceptors: {
 		reqInterceptor: config => {
+			// console.log(config);
 			config.data = qs.stringify(config.data);
 			return config;
 		},

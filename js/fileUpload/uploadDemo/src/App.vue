@@ -29,9 +29,15 @@
 			<div class="item">
 				<h3>单一文件上传「BASE64」，只适合图片</h3>
 				<section class="upload_box" id="upload2">
-					<input type="file" class="upload_inp" accept=".jpg,.jpeg,.png" />
+					<input
+						type="file"
+						class="upload_inp"
+						ref="inputRef2"
+						@change="handleChange2"
+						accept=".jpg,.jpeg,.png"
+					/>
 					<div class="upload_button_box">
-						<button class="upload_button select">上传图片</button>
+						<button class="upload_button select" @click="handleClick2">上传图片</button>
 					</div>
 					<div class="upload_tip">只能上传jpg/png格式图片，且大小不能超过2mb</div>
 				</section>
@@ -40,13 +46,19 @@
 			<div class="item">
 				<h3>单一文件上传「缩略图处理」</h3>
 				<section class="upload_box" id="upload3">
-					<input type="file" class="upload_inp" accept=".jpg,.jpeg,.png" />
+					<input
+						type="file"
+						class="upload_inp"
+						ref="inputRef3"
+						@change="handleChange3"
+						accept=".jpg,.jpeg,.png"
+					/>
 					<div class="upload_button_box">
-						<button class="upload_button select">选择文件</button>
-						<button class="upload_button upload">上传到服务器</button>
+						<button class="upload_button select" @click="handleClick3">选择文件</button>
+						<button class="upload_button upload" @click="upload3">上传到服务器</button>
 					</div>
 					<div class="upload_abbre">
-						<img src="" alt="" />
+						<img :src="imgSrc3" alt="" />
 					</div>
 				</section>
 			</div>
@@ -61,7 +73,7 @@
 						<button class="upload_button select">上传文件</button>
 					</div>
 					<div class="upload_progress">
-						<div class="value"></div>
+						<div class="value" :style="progress4"></div>
 					</div>
 				</section>
 			</div>
@@ -118,7 +130,12 @@
 <script setup>
 import { LinRequestMultipart, LinRequestAppCoded, LinRequestAppJson } from "../src/request";
 import { useUpload1 } from "./hooks/upload1";
-const { handleClick1, handleChange1, removeFile1, upload1, inputRef1, fileTitle } = useUpload1();
+import { useUpload2 } from "./hooks/upload2";
+import { useUpload3 } from "./hooks/upload3";
+const { handleClick1, handleChange1, removeFile1, upload1, inputRef1, fileTitle1 } = useUpload1();
+const { handleClick2, handleChange2, removeFile2, upload2, inputRef2, fileTitle2 } = useUpload2();
+const { handleClick3, handleChange3, removeFile3, upload3, inputRef3, fileTitle3, imgSrc3 } = useUpload3();
+
 // 监听用户选择文件
 </script>
 
@@ -214,8 +231,6 @@ body {
 	font-size: 12px;
 }
 
-.upload_box .upload_abbre,
-.upload_box .upload_progress,
 .upload_box .upload_mark {
 	display: none;
 }
