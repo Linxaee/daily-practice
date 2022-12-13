@@ -47,9 +47,9 @@ class myRequest {
 export const LinRequestMultipart = new myRequest({
 	baseURL: BASE_URL,
 	timeout: TIME_OUT,
-	// headers: {
-	//     'Content-Type': 'application/x-www-form-urlencoded'
-	// },
+	headers: {
+		"Content-Type": "application/x-www-form-urlencoded",
+	},
 });
 
 export const LinRequestAppCoded = new myRequest({

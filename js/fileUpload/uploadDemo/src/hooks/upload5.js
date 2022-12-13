@@ -4,6 +4,7 @@ export function useUpload5() {
 	const inputRef5 = ref(null);
 	const fileTitle5 = ref("");
 	const uploadFiles = ref([]);
+
 	/**
 	 * @desc 监听用户选择文件
 	 */
@@ -49,19 +50,18 @@ export function useUpload5() {
 			 * @desc 发送请求
 			 * @tip config中需要添加data属性再放入formData
 			 */
-			LinRequestMultipart.post("/upload_single", {
+			return LinRequestMultipart.post("/upload_single", {
 				data: formData,
 				onUploadProgress: ev => {
 					let { loaded, total } = ev;
 					file.progress = (loaded / total) * 100;
-					console.log(file);
 				},
 			}).then(res => {
 				if (Number(res.code === 0)) console.log(`文件${file.fileName}上传成功`);
 				else Promise.reject(res);
 			});
 		});
-
+		console.log(uploads);
 		Promise.all(uploads);
 	}
 

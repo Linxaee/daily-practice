@@ -121,9 +121,9 @@
 			<div class="item">
 				<h3>大文件上传</h3>
 				<section class="upload_box" id="upload7">
-					<input type="file" class="upload_inp" />
+					<input type="file" class="upload_inp" ref="inputRef6" @change="handleChange6" />
 					<div class="upload_button_box">
-						<button class="upload_button select">上传图片</button>
+						<button class="upload_button select" @click="handleClick6">上传图片</button>
 					</div>
 					<div class="upload_progress">
 						<div class="value"></div>
@@ -141,11 +141,13 @@ import { useUpload2 } from "./hooks/upload2";
 import { useUpload3 } from "./hooks/upload3";
 import { useUpload4 } from "./hooks/upload4";
 import { useUpload5 } from "./hooks/upload5";
+import { useUpload6 } from "./hooks/upload6";
 const { handleClick1, handleChange1, removeFile1, upload1, inputRef1, fileTitle1 } = useUpload1();
 const { handleClick2, handleChange2, removeFile2, upload2, inputRef2, fileTitle2 } = useUpload2();
 const { handleClick3, handleChange3, removeFile3, upload3, inputRef3, fileTitle3, imgSrc3 } = useUpload3();
 const { handleClick4, handleChange4, removeFile4, upload4, inputRef4, fileTitle4, progress4 } = useUpload4();
 const { handleClick5, handleChange5, removeFile5, upload5, inputRef5, uploadFiles } = useUpload5();
+const { handleClick6, handleChange6, removeFile6, upload6, inputRef6, uploadFiles2 } = useUpload6();
 </script>
 
 <style scoped>
